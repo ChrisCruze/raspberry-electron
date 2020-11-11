@@ -1,0 +1,23 @@
+{
+  "name": "raspberry-electron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+        "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisCruze/raspberry-electron.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisCruze/raspberry-electron/issues"
+  },
+  "homepage": "https://github.com/ChrisCruze/raspberry-electron#readme",
+  "devDependencies": {
+    "electron": "^10.1.5"
+  }
+}
