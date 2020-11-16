@@ -430,27 +430,17 @@
       <!-- End Section Footer -->
     </div>
   </div>
-
-	<script>
-	    require('jquery')
-	    require('bootstrap')
-	    require('moment')
-	    require('underscore')
-	</script>
-<!-- 
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script src="https://inspinia.site44.com/js/jquery-3.1.1.min.js"></script>
 	<script src="https://inspinia.site44.com/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.11.0/underscore-min.js"></script>
--->
-
+	<script>if (window.module) module = window.module;</script>
   <script>
-
-
     function on(num){
         $.ajax({
             type:'Get',
-            url:`/on/${num}`,
+            url:`http://localhost:5000/on/${num}`,
             contentType:'application/json',
             success: function(data){
                 console.log({data})
@@ -460,7 +450,7 @@
     function off(num){
         $.ajax({
             type:'Get',
-            url:`/off/${num}`,
+            url:`http://localhost:5000/off/${num}`,
             contentType:'application/json',
             success: function(data){
                 console.log({data})
@@ -482,6 +472,8 @@ $( "li" ).on( "click", function() {
 
       }
 });
+
+
 
 
 
