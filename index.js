@@ -11,7 +11,9 @@ function createWindow () {
   })
 
   win.loadFile('index.html')
-  win.webContents.openDevTools()
+  win.maximize() 
+   win.setFullScreen(true)
+  // win.webContents.openDevTools()
 }
 
 app.whenReady().then(createWindow)
