@@ -370,7 +370,7 @@
           <div class="col-12">
             <span class="sha_temp">
               <span>
-                <span class="temp-data"> 16 <sup>&deg;C</sup> </span>
+                <span class="temp-data"> <span id="temperature" ></span> <sup>&deg;F</sup></span>
                 <span class="temp-info">
                   <i class="fa fa-snowflake-o"></i> Cooling
                 </span>
@@ -391,7 +391,18 @@
               </span>
               <span class="tile_info">
                 Humidity
-                <span>65%</span>
+                <span><span id="humidity"></span>%</span>
+              </span>
+            </div>
+          </div>
+          <div class="col-12 sha_tile">
+            <div>
+              <span class="tile_icon">
+                <i class="fa fa-fire"></i>
+              </span>
+              <span class="tile_info">
+                Pressure
+                <span><span id="pressure"></span></span>
               </span>
             </div>
           </div>
@@ -493,6 +504,62 @@ $( "li" ).on( "click", function() {
 
 
 
+
+
+    function celcius_to_farenheight(i){
+      float_num = parseFloat(i)||0
+      return (float_num * 9/5) + 32
+    }
+    
+
+    function temperature_update(){
+        $.ajax({
+            type:'Get',
+            url:`http://localhost:5000/temperature`,
+            contentType:'application/json',
+            success: function(i){
+                farenheight_number = celcius_to_farenheight(i)
+                $("#temperature").html(farenheight_number.toFixed(1))
+        }
+    }
+    )}
+
+    function humidity_update(){
+        $.ajax({
+            type:'Get',
+            url:`http://localhost:5000/humidity`,
+            contentType:'application/json',
+            success: function(i){
+                float_num = parseFloat(i)||0
+                $("#humidity").html(float_num.toFixed(1))
+        }
+    }
+    )}
+
+    function pressure_update(){
+        $.ajax({
+            type:'Get',
+            url:`http://localhost:5000/pressure`,
+            contentType:'application/json',
+            success: function(i){
+                float_num = parseFloat(i)||0
+                $("#pressure").html(float_num.toFixed(1))
+        }
+    }
+    )}
+
+
+    function loop_update(){
+        function refresh(){
+            temperature_update()
+            humidity_update()
+            pressure_update()
+            setTimeout(refresh,5000)
+        }
+        refresh()
+    }
+
+    setTimeout(loop_update,5000)
 
 
 
