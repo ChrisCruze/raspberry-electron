@@ -506,8 +506,8 @@ $( "li" ).on( "click", function() {
 
 
 
-    function celcius_to_farenheight(i){
-      float_num = parseFloat(i)||0
+    function celcius_to_farenheight(float_num){
+      
       return (float_num * 9/5) + 32
     }
     
@@ -518,8 +518,11 @@ $( "li" ).on( "click", function() {
             url:`http://localhost:5000/temperature`,
             contentType:'application/json',
             success: function(i){
-                farenheight_number = celcius_to_farenheight(i)
-                $("#temperature").html(farenheight_number.toFixed(1))
+                float_num = parseFloat(i)||0
+                if (float_num > 0){
+                    farenheight_number = celcius_to_farenheight(float_num)
+                    $("#temperature").html(farenheight_number.toFixed(1))
+                }
         }
     }
     )}
@@ -531,7 +534,10 @@ $( "li" ).on( "click", function() {
             contentType:'application/json',
             success: function(i){
                 float_num = parseFloat(i)||0
-                $("#humidity").html(float_num.toFixed(1))
+                if (float_num > 0){
+                    $("#humidity").html(float_num.toFixed(1))
+                }
+
         }
     }
     )}
@@ -543,7 +549,9 @@ $( "li" ).on( "click", function() {
             contentType:'application/json',
             success: function(i){
                 float_num = parseFloat(i)||0
-                $("#pressure").html(float_num.toFixed(1))
+                if (float_num > 0){
+                    $("#pressure").html(float_num.toFixed(1))
+                }
         }
     }
     )}
