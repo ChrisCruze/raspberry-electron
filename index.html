@@ -620,7 +620,7 @@ $( "li.sound" ).on( "click", function() {
     function loop_update_long(){
         function refresh(){
             download_speed_update()
-            setTimeout(refresh,1000*60*60)
+            setTimeout(refresh,1000*60*10)
         }
         refresh()
     }
