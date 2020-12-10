@@ -338,11 +338,7 @@
                   <i class="fa fa-snowflake-o"></i>
                 </span>
               </li>
-              <li class="on" gpio="5" title="Heater">
-                <span>
-                  <i class="fa fa-sun-o"></i>
-                </span>
-              </li>
+
               <li class="on" gpio="22" title="Lights">
                 <span>
                   <i class="fa fa-lightbulb-o"></i>
@@ -356,6 +352,11 @@
               <li class="on" gpio="17" title="USB Port">
                 <span>
                   <i class="fa fa-usb"></i>
+                </span>
+              </li>
+              <li class="sound" title="Sound">
+                <span>
+                  <i class="fa fa-waveform"></i>
                 </span>
               </li>
             </ul>
@@ -496,7 +497,7 @@
     }
 
 
-$( "li" ).on( "click", function() {
+$( "li.on" ).on( "click", function() {
       const on_off_class =  $( this ).attr("class") // $(this)//.attr('class')
       const gpio =  $( this ).attr("gpio") // $(this)//.attr('class')
       if (on_off_class == 'on'){
@@ -510,6 +511,17 @@ $( "li" ).on( "click", function() {
       }
 });
 
+$( "li.sound" ).on( "click", function() {
+
+          $.ajax({
+            type:'Get',
+            url:`/sound`,
+            contentType:'application/json',
+            success: function(i){
+        }
+    }
+    )
+})
 
 
     function time_update(){
@@ -616,7 +628,15 @@ $( "li" ).on( "click", function() {
     setTimeout(loop_update_long,5000)
 
 
-
+    function sound_initiate(){
+        $.ajax({
+            type:'Get',
+            url:`/sound`,
+            contentType:'application/json',
+            success: function(i){
+        }
+    }
+    )}
 
 
 
