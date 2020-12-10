@@ -394,36 +394,35 @@
       <!-- Start Section Body 2 -->
       <section id="sha_temp_meta" class="col-12">
         <div class="row">
-          <div class="col-12 sha_tile">
+          <div class="col-12 sha_tile" onclick="humidity_update()">
             <div>
               <span class="tile_icon">
                 <i class="fa fa-fire"></i>
               </span>
               <span class="tile_info">
                 Humidity
-                <span><span id="humidity"></span>%</span>
+                <span id="humidity"></span>%<span id="humidity_timestamp">mbps</span>
               </span>
             </div>
           </div>
-          <div class="col-12 sha_tile">
+          <div class="col-12 sha_tile" onclick="pressure_update()">
             <div>
               <span class="tile_icon">
                 <i class="fa fa-fire"></i>
               </span>
               <span class="tile_info">
                 Pressure
-                <span><span id="pressure"></span></span>
+                <span id="pressure"></span><span id="pressure_timestamp">mbps</span>
               </span>
             </div>
           </div>
-          <div class="col-12 sha_tile">
+          <div class="col-12 sha_tile" onclick="download_speed_update()">
             <div>
               <span class="tile_icon">
                 <i class="fa fa-wifi"></i>
               </span>
               <span class="tile_info">
-                Internet
-                <span><span id="download_speed"></span>mbps</span>
+                <span id="download_speed"></span><span id="download_speed_timestamp">mbps</span>
               </span>
             </div>
           </div>
@@ -550,6 +549,8 @@ $( "li" ).on( "click", function() {
                 float_num = parseFloat(i)||0
                 if (float_num > 0){
                     $("#humidity").html(float_num.toFixed(1))
+                    $("#humidity_timestamp").html( moment().format('h:mma'))
+
                 }
 
         }
@@ -565,6 +566,8 @@ $( "li" ).on( "click", function() {
                 float_num = parseFloat(i)||0
                 if (float_num > 0){
                     $("#pressure").html(float_num.toFixed(1))
+                    $("#pressure_timestamp").html( moment().format('h:mma'))
+
                 }
         }
     }
@@ -595,6 +598,8 @@ $( "li" ).on( "click", function() {
                 float_num = parseFloat(i)||0
                 if (float_num > 0){
                     $("#download_speed").html(float_num.toFixed(1))
+                    $("#download_speed_timestamp").html( moment().format('h:mma'))
+
                 }
         }
     }
