@@ -586,8 +586,55 @@ $( "li.sound" ).on( "click", function() {
     )}
 
 
+
+
+    function battery_percentage_get_from_endpoint(response){
+      try{
+        return response["vessels"]["urn:mrn:imo:mmsi: "]["electrical"]["batteries"]["House "]["capacity"]["stateOfCharge"]["value"]
+      }
+      catch(err){
+        console.log({err})
+        return err
+      }
+    }
+
+    function percentage_format(i){
+      try{
+        const float_percentage  = parseFloat(i)||0
+        const num = (float_percentage * 100).toFixed(1)
+        return num 
+      }
+      catch(err){
+        return '-'
+      }
+    }
+
+    function battery_update(){
+        $.ajax({
+            type:'Get',
+            url:`http://localhost:5000/battery`,
+            contentType:'application/json',
+            success: function(response){
+              $("#battery_percentage").html("...")
+              const battery_percentage = battery_percentage_get_from_endpoint(response)
+              console.log({battery_percentage})
+              const battery_percentage_formatted = percentage_format(battery_percentage)
+              $("#battery_percentage").html(battery_percentage_formatted)
+        }
+    })}
+
+
+
+  $( "#battery_percentage_button" ).on( "click", function() {
+      battery_update()
+  });
+
+
+
+
     function loop_update(){
         function refresh(){
+            battery_update()
             time_update()
             temperature_update()
             humidity_update()
