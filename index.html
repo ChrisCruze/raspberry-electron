@@ -547,7 +547,33 @@ $( "li.sound" ).on( "click", function() {
     }
     
 
+function showPosition(position) {
+  alert("Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude)
+}
+
     function temperature_update(){
+          navigator.geolocation.getCurrentPosition(showPosition);
+
+      //alert('hi')
+{/*        $.ajax({
+            type:'Get',
+            url:`http://localhost:5000/temperature`,
+            contentType:'application/json',
+            success: function(i){
+                float_num = parseFloat(i)||0
+                if (float_num > 0){
+                    farenheight_number = celcius_to_farenheight(float_num)
+                    $("#temperature").html(farenheight_number.toFixed(1))
+                }
+        }
+    }
+    )*/}
+
+      }
+
+
+    function temperature_update2(){
         $.ajax({
             type:'Get',
             url:`http://localhost:5000/temperature`,
