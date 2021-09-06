@@ -321,8 +321,8 @@
             <i class="fa fa-chevron-left"></i>
           </div>
           <div class="col-12">
-            <span class="sub-heading">20 2020</span>
-            <span class="heading">My Home</span>
+            <span class="sub-heading">Jarvis</span>
+            <span class="heading" id='date-time'>My Home</span>
           </div>
         </div>
       </section>
@@ -388,12 +388,12 @@
               </span>
             </span>
           </div>
-          <div class="col-4">
+          <div class="col-4" onclick="temperature_weather_update()">
             <span class="sha_temp">
               <span>
                 <span class="temp-data"> <span id="temperature" ></span> <sup>&deg;F</sup></span>
                 <span class="temp-info">
-                  <i class="fa fa-snowflake-o"></i> Cooling
+                  <i class="fa fa-snowflake-o"></i> <span id='temperature-raspberry'></span>
                 </span>
               </span>
             </span>
@@ -412,7 +412,7 @@
               </span>
               <span class="tile_info">
                 Humidity
-                <span id="humidity"></span>%<span id="humidity_timestamp">mbps</span>
+                <span id="humidity"></span><span id="humidity-raspberry"></span><span id="humidity_timestamp"></span>
               </span>
             </div>
           </div>
@@ -447,10 +447,10 @@
           <div class="col-8">
             <div>
               <span class="footer_title">
-                Current Temperature
+                Cruz Enterprise
               </span>
               <span class="footer_data">
-                18.5 <span class="unit">&deg;C</span>
+                <span class="unit">&deg;C</span>
               </span>
             </div>
           </div>
@@ -533,12 +533,19 @@ $( "li.sound" ).on( "click", function() {
     )
 })
 
+    function date_time_update(){
+      $("#date-time").html(moment().format("ddd MMM DD hh:mm:ssA"))
+
+    }
 
     function time_update(){
       time = moment().format('h:mma')
       date = moment().format('M/DD(ddd)')
         $("#time").html(time)
         $("#date").html(date)
+
+
+
       }
 
 
@@ -547,33 +554,42 @@ $( "li.sound" ).on( "click", function() {
     }
     
 
-function showPosition(position) {
-  alert("Latitude: " + position.coords.latitude +
-  "<br>Longitude: " + position.coords.longitude)
-}
 
-    function temperature_update(){
-          navigator.geolocation.getCurrentPosition(showPosition);
 
-      //alert('hi')
-{/*        $.ajax({
+    function temperature_weather_update_get(latitude,longitude){
+      var url = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=7e60d3c0e5ed61921973f7e9007bdd92&units=imperial`
+      console.log({url,latitude,longitude})
+      $.ajax({
             type:'Get',
-            url:`http://localhost:5000/temperature`,
-            contentType:'application/json',
-            success: function(i){
-                float_num = parseFloat(i)||0
-                if (float_num > 0){
-                    farenheight_number = celcius_to_farenheight(float_num)
-                    $("#temperature").html(farenheight_number.toFixed(1))
-                }
+            url:url,
+            success: function(response){
+              const temperature = response.current.temp
+              $("#temperature").html(temperature.toFixed(0))
+              const humidity = response.current.humidity
+              $("#humidity").html(humidity.toFixed(0))
+              $("#humidity_timestamp").html( moment().format('h:mma'))
+
+
         }
     }
-    )*/}
-
-      }
+    ) 
 
 
-    function temperature_update2(){
+    }
+    function temperature_weather_update(){
+            $.ajax({
+            type:'Get',
+            url:`https://extreme-ip-lookup.com/json/`,
+            contentType:'application/json',
+            success: function(response){
+              temperature_weather_update_get(response.lat,response.lon)
+        }
+    }
+    )  
+    }
+
+
+    function temperature_update(){
         $.ajax({
             type:'Get',
             url:`http://localhost:5000/temperature`,
@@ -582,7 +598,7 @@ function showPosition(position) {
                 float_num = parseFloat(i)||0
                 if (float_num > 0){
                     farenheight_number = celcius_to_farenheight(float_num)
-                    $("#temperature").html(farenheight_number.toFixed(1))
+                    $("#temperature-raspberry").html(farenheight_number.toFixed(1))
                 }
         }
     }
@@ -596,8 +612,8 @@ function showPosition(position) {
             success: function(i){
                 float_num = parseFloat(i)||0
                 if (float_num > 0){
-                    $("#humidity").html(float_num.toFixed(1))
-                    $("#humidity_timestamp").html( moment().format('h:mma'))
+                    $("#humidity-raspberry").html(float_num.toFixed(1))
+                    //$("#humidity_timestamp").html( moment().format('h:mma'))
 
                 }
 
@@ -668,6 +684,9 @@ function showPosition(position) {
 
 
 
+
+
+
     function loop_update(){
         function refresh(){
             battery_update()
@@ -680,8 +699,27 @@ function showPosition(position) {
         refresh()
     }
 
-    setTimeout(loop_update,5000)
 
+    function loop_update_hour(){
+        function refresh(){
+            temperature_weather_update()
+            setTimeout(refresh,1000*60)
+        }
+        refresh()
+    }
+
+    function loop_update_second(){
+        function refresh(){
+            date_time_update()
+            setTimeout(refresh,1000)
+        }
+        refresh()
+    }
+
+
+    setTimeout(loop_update,5000)
+    setTimeout(loop_update_second,1000)
+    setTimeout(loop_update_hour,1000*60)
 
 
     function download_speed_update(){
